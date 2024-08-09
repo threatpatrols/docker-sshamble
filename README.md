@@ -1,7 +1,8 @@
 # SSHamble: Unexpected Exposures in SSH in Docker
 
-This is a Dockerization of the awesome work by [HD More](https://github.com/hdm) with 
-SSHamble - https://github.com/runZeroInc/sshamble
+Dockerization of the awesome [SSHamble](https://SSHamble.com) by [HD Moore](https://github.com/hdm)
+
+Source: https://github.com/runZeroInc/sshamble
 
 ## Usage
 
