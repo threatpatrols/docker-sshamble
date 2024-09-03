@@ -4,7 +4,7 @@
 FROM golang:1.22-bullseye AS build
 
 # https://github.com/runZeroInc/sshamble/tags
-ARG COMMIT_TAG="main+05a8ad8"
+ARG COMMIT_TAG="v0.0.3"
 ARG SOURCE_REPO="https://github.com/runZeroInc/sshamble.git"
 
 WORKDIR "/build"
@@ -26,5 +26,14 @@ RUN set -x \
 FROM debian:stable-slim
 
 COPY --from=build /build/sshamble /usr/local/bin/sshamble
+
+RUN set -x \
+    && apt-get update \
+    && apt-get install -y ca-certificates \
+    && /usr/local/bin/sshamble badkeys-update \
+    \
+    && apt-get clean \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/usr/local/bin/sshamble"]
