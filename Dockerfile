@@ -1,10 +1,10 @@
 # runZeroInc/sshamble
 
 # https://hub.docker.com/_/golang/tags
-FROM golang:1.22-bullseye AS build
+FROM golang:1.23-bullseye AS build
 
 # https://github.com/runZeroInc/sshamble/tags
-ARG COMMIT_TAG="main+2fc30ac"
+ARG COMMIT_TAG="main+8d0c352"
 ARG SOURCE_REPO="https://github.com/runZeroInc/sshamble.git"
 
 WORKDIR "/build"
