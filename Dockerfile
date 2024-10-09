@@ -4,7 +4,7 @@
 FROM golang:1.23-bullseye AS build
 
 # https://github.com/runZeroInc/sshamble/tags
-ARG COMMIT_TAG="main+8d0c352"
+ARG COMMIT_TAG="v0.0.5"
 ARG SOURCE_REPO="https://github.com/runZeroInc/sshamble.git"
 
 WORKDIR "/build"
@@ -23,7 +23,7 @@ RUN set -x \
 # ===
 
 # https://hub.docker.com/_/debian/tags
-FROM debian:stable-slim
+FROM debian:stable-slim AS badkeys
 
 COPY --from=build /build/sshamble /usr/local/bin/sshamble
 
@@ -31,9 +31,21 @@ RUN set -x \
     && apt-get update \
     && apt-get install -y ca-certificates \
     && /usr/local/bin/sshamble badkeys-update \
+    && mv /root/.cache/badkeys /badkeys
+
+
+# https://hub.docker.com/_/debian/tags
+FROM debian:stable-slim
+
+COPY --from=build /build/sshamble /usr/local/bin/sshamble
+COPY --from=badkeys /badkeys /badkeys
+
+RUN set -x \
+    && mkdir -p /.cache \
+    && ln -s /badkeys /.cache/badkeys \
     \
-    && apt-get clean \
-    && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
+    && mkdir -p /root/.cache \
+    && ln -s /badkeys /root/.cache/badkeys
+
 
 ENTRYPOINT ["/usr/local/bin/sshamble"]
