@@ -37,6 +37,11 @@ RUN set -x \
 # https://hub.docker.com/_/debian/tags
 FROM debian:stable-slim
 
+# OCI Labels
+LABEL org.opencontainers.image.title="Docker SSHamble"
+LABEL org.opencontainers.image.authors="Nicholas de Jong <ndejong@threatpatrols.com>"
+LABEL org.opencontainers.image.source="https://github.com/threatpatrols/docker-sshamble"
+
 COPY --from=build /build/sshamble /usr/local/bin/sshamble
 COPY --from=badkeys /badkeys /badkeys
 
