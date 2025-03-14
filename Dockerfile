@@ -4,7 +4,7 @@
 FROM golang:1.23-bullseye AS build
 
 # https://github.com/runZeroInc/sshamble/tags
-ARG COMMIT_TAG="v0.0.5"
+ARG COMMIT_TAG="main+02d2683"
 ARG SOURCE_REPO="https://github.com/runZeroInc/sshamble.git"
 
 WORKDIR "/build"
