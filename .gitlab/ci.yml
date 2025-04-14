@@ -64,7 +64,10 @@ build_tagged:
   stage: build
 
   rules:
-    - if: $CI_COMMIT_TAG =~ /^(v\d+\.\d+\.\d+|main\+[a-f0-9]+)$/
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+      when: always
+    - if: $CI_COMMIT_TAG =~ /^main\+[a-f0-9]+$/
+      when: always
 
   tags:
     - "${RUNNER_INFRASTRUCTURE}"
